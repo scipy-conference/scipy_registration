@@ -147,8 +147,8 @@ if ($row['id'] == 2)
 
 $display_types .=    "
 
-    <td><input class=\"validate[required] radio\" name=\"tshirt_type\" id=\"tshirt_type\" type=\"radio\" value=\"" . $row[id] . "\"  ";
-      if ($_POST['tshirt_type'] == $row[description])
+    <td><input class=\"validate[required] radio\" name=\"tshirt_type\" id=\"tshirt_type\" type=\"radio\" value=\"" . $row['id'] . "\"  ";
+      if ($_POST['tshirt_type'] == $row['description'])
         {
           $display_types .="checked ";
         }
@@ -242,9 +242,7 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 
 <p class="left">Register online using the form below. You may also register via phone at (512)536-1057. </p>
 
-<!--
-<form id="formID" method="post" action="<?php echo $SERVER['SCRIPT_NAME'] ?>"> 
--->
+
 <form id="formID" class="formular" method="post" action="reg_p2.php">
 
 <div class="form_row">
