@@ -238,7 +238,7 @@ $pp["on1_" . $index] = $tshirt_type;
 
 <?php
 //force redirect to secure page
-//if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); exit(); }
+if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); exit(); }
 ?>
 
         <link rel="stylesheet" href="inc/validationEngine.jquery.css" type="text/css"/>
@@ -300,10 +300,10 @@ $pp["on1_" . $index] = $tshirt_type;
 <hr />
 
 <!-- switch between sandbox and www and business name jim30@toliveistofly.com vs Accounting@enthought.com -->
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_cart">
 <input type="hidden" name="upload" value="1">
-<input type="hidden" name="business" value="jim30@toliveistofly.com">
+<input type="hidden" name="business" value="accounting@enthought.com">
 
 
 <!-- #### Summary Table  -->
