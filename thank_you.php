@@ -1,6 +1,6 @@
 <?php
 // production
-//$identity_token = "";
+$identity_token = "A39MxJnoTMxFEI0H1WwnD.SyvImGAuHfh3SEpikZZ38AEA.eHuvcXLKr";
 
 
 // sandbox
@@ -11,7 +11,7 @@
 // switch $to https://www.paypal.com || https://www.sandbox.paypal.com and $token for testing and production
 
 $to = "https://www.paypal.com/cgi-bin/webscr";
-$token = "XC-RVBLamoaBjbaRR_46H0Rr_veMEbUGuFHnHQMXReu2DIotjZO0uHQqBUe";
+$token = $identity_token;
 $cmd = "_notify-synch";
 $arr_var;
 $posted;
