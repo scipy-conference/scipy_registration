@@ -57,7 +57,7 @@ if (strlen($session_param) > 60)
 
 if ($session_id_7 == "" && $session_id_8 =="" && $session_id_9 =="")
   {
-    header('Location: registration.php');
+    header('Location: index.php');
   }
 
 //===========================
