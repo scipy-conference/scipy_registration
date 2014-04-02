@@ -205,8 +205,8 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 
 <p>Thank you for registering for the SciPy 2014 Conference. You have been registered with the following information:</p>
 <ul>
-	<li>Name: <strong><?php echo $posted[first_name]; ?>  <?php echo $posted[last_name]; ?></strong> </li>
-	<li>Email: <strong><?php echo $posted[payer_email]; ?></strong> </li>
+	<li>Name: <strong><?php echo $posted['first_name']; ?>  <?php echo $posted['last_name']; ?></strong> </li>
+	<li>Email: <strong><?php echo $posted['payer_email']; ?></strong> </li>
 	<li>Rate: <strong><?php echo $rate; ?></strong> </li>
 	<li>Sessions</li></ul>
 	<table class="schedule" style="margin: 0 10em 2em; ">

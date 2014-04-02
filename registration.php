@@ -111,7 +111,7 @@ do {
 
 $display_participants .=    "
   <tr>
-    <td><span><input class=\"validate[required] radio\" name=\"participant_type\" id=\"participant_type\" type=\"radio\" value=\"" . $row[id] . "\" ";
+    <td><span><input class=\"validate[required] radio\" name=\"participant_type\" id=\"participant_type\" type=\"radio\" value=\"" . $row['id'] . "\" ";
 $display_participants .="/></span></td>
     <td>" . $row['type'] . "</td>
   </tr>";
@@ -147,8 +147,8 @@ if ($row['id'] == 2)
 
 $display_types .=    "
 
-    <td><input class=\"validate[required] radio\" name=\"tshirt_type\" id=\"tshirt_type\" type=\"radio\" value=\"" . $row[id] . "\"  ";
-      if ($_POST['tshirt_type'] == $row[description])
+    <td><input class=\"validate[required] radio\" name=\"tshirt_type\" id=\"tshirt_type\" type=\"radio\" value=\"" . $row['id'] . "\"  ";
+      if ($_POST['tshirt_type'] == $row['description'])
         {
           $display_types .="checked ";
         }
@@ -179,8 +179,8 @@ do {
 
 $display_sizes .=    "
   <tr>
-    <td><input class=\"validate[required] radio\" name=\"tshirt_size\" id=\"tshirt_size\" type=\"radio\" value=\"" . $row[id] . "\"  ";
-      if ($_POST['tshirt_size'] == $row[size])
+    <td><input class=\"validate[required] radio\" name=\"tshirt_size\" id=\"tshirt_size\" type=\"radio\" value=\"" . $row['id'] . "\"  ";
+      if ($_POST['tshirt_size'] == $row['size'])
         {
           $display_sizes .="checked ";
         }
@@ -242,9 +242,6 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 
 <p class="left">Register online using the form below. You may also register via phone at (512)536-1057. </p>
 
-<!--
-<form id="formID" method="post" action="<?php echo $SERVER['SCRIPT_NAME'] ?>"> 
--->
 <form id="formID" class="formular" method="post" action="reg_p2.php">
 
 <div class="form_row">
