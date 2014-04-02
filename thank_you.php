@@ -195,7 +195,7 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 <?php include('inc/page_headers.php') ?>
 
 <section id="sidebar">
-  <?php include("inc/sponsors.php") ?>
+
 </section>
 
 
