@@ -1,6 +1,6 @@
 <header id="page_header">
   <div class="header_logo">
-    <a href="index.php"><img src="../img/scipy2014_logo_simple.png" id="Python" alt="SciPy2014" width="359" height="99" /></a>
+    <a href="https://conference.scipy.org/scipy2014/"><img src="../img/scipy2014_logo_simple.png" id="Python" alt="SciPy2014" width="359" height="99" /></a>
   </div>
 
   <div class="header_tagline">
