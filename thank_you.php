@@ -1,6 +1,6 @@
 <?php
 // production
-$identity_token = "A39MxJnoTMxFEI0H1WwnD.SyvImGAuHfh3SEpikZZ38AEA.eHuvcXLKr";
+$identity_token = "JgvAMg8amsmRCCUY228qiKJLL72mEN038Cndz1ZyLqNGo6o5hQevjSdZIFa";
 
 
 // sandbox
