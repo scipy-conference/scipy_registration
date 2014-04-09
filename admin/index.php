@@ -365,7 +365,10 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 <html>
 <?php $thisPage="Admin"; ?>
 <head>
-
+<?php
+//force redirect to secure page
+if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); exit(); }
+?>
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 
 <link rel="shortcut icon" href="http://conference.scipy.org/scipy2013/favicon.ico" />

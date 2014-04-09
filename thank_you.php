@@ -11,7 +11,7 @@ $identity_token = "JgvAMg8amsmRCCUY228qiKJLL72mEN038Cndz1ZyLqNGo6o5hQevjSdZIFa";
 // switch $to https://www.paypal.com || https://www.sandbox.paypal.com and $token for testing and production
 
 $to = "https://www.paypal.com/cgi-bin/webscr";
-$token = $identity_token;
+$token = "JgvAMg8amsmRCCUY228qiKJLL72mEN038Cndz1ZyLqNGo6o5hQevjSdZIFa";
 $cmd = "_notify-synch";
 $arr_var;
 $posted;
@@ -183,8 +183,6 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
         </script>
 
 <?php include('inc/header.php') ?>
-
-<link rel="shortcut icon" href="http://conference.scipy.org/scipy2014/favicon.ico" />
 
 </head>
 

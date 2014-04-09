@@ -221,8 +221,6 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 
 <?php include('inc/header.php') ?>
 
-<link rel="shortcut icon" href="http://conference.scipy.org/scipy2014/favicon.ico" />
-
 </head>
 
 <body>

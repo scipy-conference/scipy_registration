@@ -11,7 +11,7 @@ foreach ($_POST as $key => $value) {
 $header .= "POST /cgi-bin/webscr HTTP/1.1\r\n";
 $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 // $header .= "Host: www.paypal.com\r\n";  // www.sandbox.paypal.com for a test site
-$header .= "Host: www.sandbox.paypal.com\r\n";
+$header .= "Host: www.paypal.com\r\n";
 $header .= "Content-Length: " . strlen($req) . "\r\n";
 $header .= "Connection: close\r\n\r\n";
 
@@ -20,11 +20,11 @@ $header .= "Connection: close\r\n\r\n";
 //$fp = fsockopen ('www.sandbox.paypal.com', 80, $errno, $errstr, 30);
 
 
-$fp = fsockopen ('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
+$fp = fsockopen ('ssl://www.paypal.com', 80, $errno, $errstr, 30);
 
 if (!$fp) {
 // HTTP error...
-$to = 'jim@polarbeardesign.net';
+$to = 'jivanoff@enthought.com';
 $subject = 'SciPy2014 | HTTP error';
 $message = 'somethings wrong';
 $headers = 'From:noreply@scipy.org' . "\r\n";
@@ -45,12 +45,11 @@ while (!feof($fp)) {
 //   (!txn_id_used_before($txn_id))) {  //txn_id isn't same as previous to stop duplicate payments. You will need to write a function to do this check.
 
 $first_name = $_POST['first_name'];
-//$pp_array = print_r($_POST);
 foreach ($_POST as $key => $value) {
   $pp_array .= $key . " = " . $value . "<br />";
 }
 
-$to = 'jim@polarbeardesign.net';
+$to = 'jivanoff@enthought.com';
 $subject = 'SciPy2014 | Payment';
 $message = "from: " .  $pp_array . " ";
 $headers = 'From:noreply@scipy.org' . "\r\n";

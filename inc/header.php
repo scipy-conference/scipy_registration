@@ -1,6 +1,6 @@
 <?php
-//$domain = "http://conference.scipy.org";
-$domain = "http://localhost/~pbd";
+$domain = "https://conference.scipy.org";
+//$domain = "http://localhost/~pbd";
 ?>
 
 <title>SciPy 2014&nbsp;::&nbsp;<?php if ($thisPage!="")  echo "$thisPage"; ?><?php if ($thisSub!="")  echo "&nbsp;::&nbsp;$thisSub"; ?></title>
