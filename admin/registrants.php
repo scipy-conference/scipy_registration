@@ -40,6 +40,7 @@ $sql_registrants .= "ordernumber, ";
 $sql_registrants .= "SUM(IF(session = \"Conference\",1,0)) AS conference, ";
 $sql_registrants .= "SUM(IF(session = \"Tutorials\",1,0)) AS tutorials, ";
 $sql_registrants .= "SUM(IF(session = \"Sprints\",1,0)) AS sprints, ";
+$sql_registrants .= "SUM(IF(session = \"Women in Scientific Computing Luncheon\",1,0)) AS luncheon, ";
 $sql_registrants .= "SUM(amt_paid) AS amt_paid, ";
 $sql_registrants .= "type_abbr, ";
 $sql_registrants .= "size, ";
@@ -96,7 +97,15 @@ $display_registrants .="<tr class=$row_color>
       {
         $display_registrants .="<td align=\"center\">&nbsp;</td>";
       }
-$display_registrants .="    <td align=\"right\">$ " . $row['amt_paid'] . "</td>
+    if ($row['luncheon'] == 1)
+      {
+        $display_registrants .="<td align=\"center\">&#x2713;</td>";
+      }
+      else
+      {
+        $display_registrants .="<td align=\"center\">&nbsp;</td>";
+      }
+$display_registrants .="    <td align=\"right\">$&nbsp;" . $row['amt_paid'] . "</td>
     <td>" . $row['size'] . " " . $row['type_abbr'] . "</td>
     <td>" . $row['order date'] . "</td>
   </tr>";
@@ -108,6 +117,7 @@ $row_count++;
 $conf_sum = $conf_sum + $row['conference'];
 $tut_sum = $tut_sum + $row['tutorials'];
 $sprt_sum = $sprt_sum + $row['sprints'];
+$wscl_sum = $wscl_sum + $row['luncheon'];
 $amt_paid_sum = $amt_paid_sum + $row['amt_paid'];
 
 }
@@ -120,6 +130,7 @@ while($row = mysql_fetch_array($total_registrants));
 <html>
 <?php $thisPage="Admin"; ?>
 <head>
+<?php include('../inc/force_ssl.php') ?>
 
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 
@@ -146,13 +157,14 @@ while($row = mysql_fetch_array($total_registrants));
 <p><a href="registrants_csv.php">Export to CSV (for Excel)</a></p>
 </div>
 
-<table id="registrants_table" width="600">
+<table id="registrants_table" class="schedule" width="650">
 <tr>
   <th width="150">Participant Name</th>
   <th>Type / Ord #</th>
   <th>Conf</th>
-  <th>Tutrls</th>
-  <th>Sprts</th>
+  <th>Ttrls</th>
+  <th>Sprnt</th>
+  <th>WSCL</th>
   <th>Amt Paid</th>
   <th>Size</th>
   <th>Date</th>
@@ -163,7 +175,8 @@ while($row = mysql_fetch_array($total_registrants));
   <td align="right"><span class="bold"><?php echo $conf_sum ?></span></td>
   <td align="right"><span class="bold"><?php echo $tut_sum ?></span></td>
   <td align="right"><span class="bold"><?php echo $sprt_sum ?></span></td>
-  <td align="right"><span class="bold">$<?php echo number_format($amt_paid_sum,2) ?></span></td>
+  <td align="right"><span class="bold"><?php echo $wscl_sum ?></span></td>
+  <td align="right"><span class="bold">$&nbsp;<?php echo number_format($amt_paid_sum,2) ?></span></td>
   <td colspan="2">&nbsp;</td>
 </tr>
 </table>

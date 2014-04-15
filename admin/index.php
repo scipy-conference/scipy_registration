@@ -128,9 +128,11 @@ $sql_sessions .= "type,  ";
 $sql_sessions .= "SUM(IF(session_id = 7,amt_paid,0)) AS tutorials_paid,  ";
 $sql_sessions .= "SUM(IF(session_id = 8,amt_paid,0)) AS conference_paid,  ";
 $sql_sessions .= "SUM(IF(session_id = 9,amt_paid,0)) AS sprints_paid,  ";
+$sql_sessions .= "SUM(IF(session_id = 10,amt_paid,0)) AS luncheon_paid,  ";
 $sql_sessions .= "SUM(IF(session_id = 7,1,0)) AS Tutorials,  ";
 $sql_sessions .= "SUM(IF(session_id = 8,1,0)) AS Conference,  ";
-$sql_sessions .= "SUM(IF(session_id = 9,1,0)) AS Sprints  ";
+$sql_sessions .= "SUM(IF(session_id = 9,1,0)) AS Sprints,  ";
+$sql_sessions .= "SUM(IF(session_id = 10,1,0)) AS WSCL  ";
 $sql_sessions .= "FROM registrations  ";
 $sql_sessions .= "LEFT JOIN registered_sessions  ";
 $sql_sessions .= "ON registration_id = registrations.id  ";
@@ -154,6 +156,7 @@ $display_sessions_paid .="<tr class=$row_color>
     <td align=\"right\">$ " . number_format($row['conference_paid'],2) . "</td>
     <td align=\"right\">n/a</td>
     <td align=\"right\">$ " . number_format($row['tutorials_paid'],2) . "</td>
+    <td align=\"right\">$ " . number_format($row['luncheon_paid'],2) . "</td>
   </tr>";
 
 $display_sessions .="<tr class=$row_color>
@@ -161,6 +164,7 @@ $display_sessions .="<tr class=$row_color>
     <td align=\"right\">" . $row['Conference'] . "</td>
     <td align=\"right\">" . $row['Sprints'] . "</td>
     <td align=\"right\">" . $row['Tutorials'] . "</td>
+    <td align=\"right\">" . $row['WSCL'] . "</td>
   </tr>";
   }
 $row_color=($row_count%2)?$row_1:$row_2;
@@ -176,9 +180,11 @@ $sql_sess_sum = "SELECT  ";
 $sql_sess_sum .= "SUM(IF(session_id = 7,amt_paid,0)) AS tutorials_paid,  ";
 $sql_sess_sum .= "SUM(IF(session_id = 8,amt_paid,0)) AS conference_paid,  ";
 $sql_sess_sum .= "SUM(IF(session_id = 9,amt_paid,0)) AS sprints_paid,  ";
+$sql_sess_sum .= "SUM(IF(session_id = 10,amt_paid,0)) AS luncheon_paid,  ";
 $sql_sess_sum .= "SUM(IF(session_id = 7,1,0)) AS Tutorials,  ";
 $sql_sess_sum .= "SUM(IF(session_id = 8,1,0)) AS Conference,  ";
-$sql_sess_sum .= "SUM(IF(session_id = 9,1,0)) AS Sprints  ";
+$sql_sess_sum .= "SUM(IF(session_id = 9,1,0)) AS Sprints,  ";
+$sql_sess_sum .= "SUM(IF(session_id = 10,1,0)) AS WSCL  ";
 $sql_sess_sum .= "FROM registrations  ";
 $sql_sess_sum .= "LEFT JOIN registered_sessions  ";
 $sql_sess_sum .= "ON registration_id = registrations.id  ";
@@ -196,17 +202,19 @@ do {
   {
 
 $display_sess_sum .="<tr>
-    <td><span class=\"bold\">Totals</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['Conference'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['Sprints'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['Tutorials'] . "</span></td>
+    <td><strong>Totals</strong></td>
+    <td align=\"right\"><strong>" . $row['Conference'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['Sprints'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['Tutorials'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['WSCL'] . "</strong></td>
   </tr>";
 
 $display_sess_paid_sum .="<tr>
-    <td><span class=\"bold\">Totals</span></td>
-    <td align=\"right\"><span class=\"bold\">$ " . number_format($row['conference_paid'],2) . "</span></td>
-    <td align=\"right\"><span class=\"bold\">n/a</span></td>
-    <td align=\"right\"><span class=\"bold\">$ " . number_format($row['tutorials_paid'],2) . "</span></td>
+    <td><strong>Totals</strong></td>
+    <td align=\"right\"><strong>$ " . number_format($row['conference_paid'],2) . "</strong></td>
+    <td align=\"right\"><strong>n/a</strong></td>
+    <td align=\"right\"><strong>$ " . number_format($row['tutorials_paid'],2) . "</strong></td>
+    <td align=\"right\"><strong>$ " . number_format($row['luncheon_paid'],2) . "</strong></td>
   </tr>";
   }
 }
@@ -238,11 +246,11 @@ do {
   {
 
 $display_tshirts .="<tr>
-    <td align=\"right\"><span class=\"bold\">" . $row['s'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['m'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['l'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['xl'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['xxl'] . "</span></td>
+    <td align=\"right\"><strong>" . $row['s'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['m'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['l'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['xl'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['xxl'] . "</strong></td>
   </tr>";
 
   $t_shirt_qty = $row['s'] + $row['m'] + $row['l'] + $row['xl'] + $row['xxl'];
@@ -311,11 +319,11 @@ do {
   {
 
 $display_uni_tshirts .="<tr>
-    <td align=\"right\"><span class=\"bold\">" . $row['s'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['m'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['l'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['xl'] . "</span></td>
-    <td align=\"right\"><span class=\"bold\">" . $row['xxl'] . "</span></td>
+    <td align=\"right\"><strong>" . $row['s'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['m'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['l'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['xl'] . "</strong></td>
+    <td align=\"right\"><strong>" . $row['xxl'] . "</strong></td>
   </tr>";
 
   $uni_t_shirt_qty = $row['s'] + $row['m'] + $row['l'] + $row['xl'] + $row['xxl'];
@@ -365,10 +373,8 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 <html>
 <?php $thisPage="Admin"; ?>
 <head>
-<?php
-//force redirect to secure page
-if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); exit(); }
-?>
+<?php include('../inc/force_ssl.php') ?>
+
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 
 <link rel="shortcut icon" href="http://conference.scipy.org/scipy2013/favicon.ico" />
@@ -389,7 +395,7 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 <h1>Admin</h1>
 
 <h2>Paid Registrations</h2>
-<p>Total Registered: <span class="bold"><?php echo $registered_qty ?></span></p>
+<p>Total Registered: <strong><?php echo $registered_qty ?></strong></p>
 <div align="center">
 <?php echo "$daily_reg_chart" ?>
 <br />
@@ -401,6 +407,7 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
   <th><div align="right">Conference</div></th>
   <th><div align="right">Sprints</div></th>
   <th><div align="right">Tutorials</div></th>
+  <th><div align="right">WSCL</div></th>
 </tr>
 <?php echo $display_sessions ?>
 <?php echo $display_sess_sum ?>
@@ -408,7 +415,7 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 <br />
 </div>
 
-<p>Total Paid: <span class="bold">$ <?php echo $registered_amt_paid ?></span></p>
+<p>Total Paid: <strong>$ <?php echo $registered_amt_paid ?></strong></p>
 
 <div align="center">
 <table id="registrants_table" width="450">
@@ -417,6 +424,7 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
   <th><div align="right">Conference</div></th>
   <th><div align="right">Sprints</div></th>
   <th><div align="right">Tutorials</div></th>
+  <th><div align="right">WSCL</div></th>
 </tr>
 <?php echo $display_sessions_paid ?>
 <?php echo $display_sess_paid_sum ?>
@@ -460,9 +468,9 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 <h2>T-Shirts</h2>
 
 <div class="cell">
-<p>Ladies T-Shirts: <span class="bold"><?php echo $t_shirt_qty ?></span></p>
+<p>Ladies T-Shirts: <strong><?php echo $t_shirt_qty ?></strong></p>
 <?php echo"$chart" ?>
-<table id="registrants_table" width="250" style="margin: 0 auto;">
+<table id="registrants_table"  class="schedule"width="250" style="margin: 0 auto;">
 <tr>
   <th width="50"><div align="right">S</th>
   <th width="50"><div align="right">M</div></th>
@@ -474,9 +482,9 @@ if($_SERVER['SERVER_PORT'] != '443') { header('Location: https://'.$_SERVER['HTT
 </table>
 </div>
 <div class="cell">
-<p>Unisex T-Shirts: <span class="bold"><?php echo $uni_t_shirt_qty ?></span></p>
+<p>Unisex T-Shirts: <strong><?php echo $uni_t_shirt_qty ?></strong></p>
 <?php echo"$chart_uni" ?>
-<table id="registrants_table" width="250" style="margin: 0 auto;">
+<table id="registrants_table" class="schedule" width="250" style="margin: 0 auto;">
 <tr>
   <th width="50"><div align="right">S</th>
   <th width="50"><div align="right">M</div></th>

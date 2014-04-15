@@ -136,6 +136,8 @@ $sql_registrants .= "participants.last_name, ";
 $sql_registrants .= "participants.first_name, ";
 $sql_registrants .= "affiliation, ";
 $sql_registrants .= "email, ";
+$sql_registrants .= "participants.address1, ";
+$sql_registrants .= "participants.address2, ";
 $sql_registrants .= "participants.city, ";
 $sql_registrants .= "participants.state, ";
 $sql_registrants .= "participants.postal_code, ";
@@ -163,10 +165,12 @@ $last_name = $row['last_name'];
 $first_name = $row['first_name'];
 $affiliation = $row['affiliation'];
 $email = $row['email'];
+$address1 = $row['address1'];
+$address2 = $row['address2'];
 $city = $row['city'];
 $state = $row['state'];
 $postal_code = $row['postal_code'];
-$country = $row['country'];
+$country = strtoupper($row['country']);
 $reg_date = $row['reg_date'];
 $type = $row['type'];
 $phone = $row['phone'];
@@ -210,10 +214,10 @@ do {
      $display_sessions .="
      <li>" . $row['session'] . " - $" . $row['amt_paid'] . "</li>";
         
-          if ($row['session'] == 'Tutorials')
-  {
-    $display_sessions .="<ul><li>" . $row['title'] . "</li>";
-  }
+//          if ($row['session'] == 'Tutorials')
+//  {
+//    $display_sessions .="<ul><li>" . $row['title'] . "</li>";
+//  }
   }
    elseif ($row['session'] == 'Tutorials')
   {
@@ -234,6 +238,7 @@ while($row = mysql_fetch_array($total_sessions));
 <html>
 <?php $thisPage="Admin"; ?>
 <head>
+<?php include('../inc/force_ssl.php') ?>
 
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 
@@ -273,6 +278,8 @@ $(document).ready(function(){
 <h2>Contact:</h2>
 <p><?php echo "$last_name, $first_name" ?><br />
 <?php if($affiliation != "") {echo "$affiliation <br />";} ?>
+<?php if($address1 != "") {echo "$address1 <br />";} ?>
+<?php if($address2 != "") {echo "$address2 <br />";} ?>
 <?php echo "$city, $state $postal_code" ?><br />
 <?php echo "$country" ?></p>
 
@@ -283,7 +290,7 @@ $(document).ready(function(){
 <div class="form_cell">
 <h2>Registered Sessions:</h2>
 
-<p>Registered at <span class="bold"><?php echo "$type" ?></span> level on <span class="bold"><?php echo "$reg_date" ?></span>, for the following sessions:
+<p>Registered at <strong><?php echo "$type" ?></strong> level on <span class="bold"><?php echo "$reg_date" ?></span>, for the following sessions:</p>
 <ul>
 <?php echo $display_sessions ?>
 </ul>
@@ -294,7 +301,9 @@ $(document).ready(function(){
 <input type="hidden" name="participant_id" value="<?php echo $participant_id ?>" />
 <input type="hidden" name="registration_id" value="<?php echo $registration_id ?>" />
 
-<input type="submit" class="delete" value="delete registrant">
+<div align="center" style="margin-top: 1em;">
+  <input type="submit" class="delete" value="delete registrant">
+</div>
 </form>
 
 

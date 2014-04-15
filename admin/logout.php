@@ -21,6 +21,7 @@ session_destroy();
 <html>
 <?php $thisPage="Admin"; ?>
 <head>
+<?php include('../inc/force_ssl.php') ?>
 
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 

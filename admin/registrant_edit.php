@@ -73,7 +73,7 @@ $sql_reg_sessions .= "LEFT JOIN sessions ";
 $sql_reg_sessions .= "ON session_id = sessions.id ";
 $sql_reg_sessions .= "LEFT JOIN registrations ";
 $sql_reg_sessions .= "ON registration_id = registrations.id ";
-$sql_reg_sessions .= "WHERE participant_id = $participant_id ";
+$sql_reg_sessions .= "WHERE participant_id = \"$participant_id\" ";
 $sql_reg_sessions .= "AND registrations.conference_id = 3";
 
 $total_reg_sessions = @mysql_query($sql_reg_sessions, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
@@ -208,6 +208,7 @@ while($row = mysql_fetch_array($total_result_sizes));
 <html>
 <?php $thisPage="Admin"; ?>
 <head>
+<?php include('../inc/force_ssl.php') ?>
 
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 

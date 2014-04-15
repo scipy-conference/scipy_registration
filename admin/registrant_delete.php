@@ -11,6 +11,7 @@ $registration_id = $_POST['registration_id'];
 <html>
 <?php $thisPage="Admin"; ?>
 <head>
+<?php include('../inc/force_ssl.php') ?>
 
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 
