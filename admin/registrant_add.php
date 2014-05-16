@@ -61,9 +61,7 @@ $display_sessions .=" /></td>
         }
 $display_sessions .="</td>
     <td>" . $row['Dates'] . "</td>
-    <td align=\"right\"> $ " . $row['Standard'] . "</td>
-    <td align=\"right\"> $ " . $row['Academic'] . "</td>
-    <td align=\"right\"> $ " . $row['Student'] . "</td>
+
   </tr>";
   }
 }
@@ -90,7 +88,13 @@ $display_participants .=    "
   <tr>
     <td><span><input class=\"validate[required] radio\" name=\"participant_type\" id=\"participant_type\" type=\"radio\" value=\"" . $row[id] . "\" ";
 $display_participants .="/></span></td>
-    <td>" . $row['type'] . "</td>
+    <td>" . $row['type'] . "";
+    if ($row[id] > 3)
+      {
+         $display_participants .=" - <span class=\"highlight\"><em>free</em></span>";
+      }
+    
+    $display_participants .="</td>
   </tr>";
   }
 }
@@ -216,7 +220,7 @@ while($row = mysql_fetch_array($total_result_sizes));
 <?php include('_registrant_form.php') ?>
 
 <div align="center">
-  <input type="submit" name="submit" value="next >>"/>
+  <input type="submit" name="submit" value="Add Registrant"/>
 </div>
 </form>
 </section>

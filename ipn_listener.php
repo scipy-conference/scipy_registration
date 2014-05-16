@@ -20,7 +20,7 @@ $header .= "Connection: close\r\n\r\n";
 //$fp = fsockopen ('www.sandbox.paypal.com', 80, $errno, $errstr, 30);
 
 
-$fp = fsockopen ('ssl://www.paypal.com', 80, $errno, $errstr, 30);
+$fp = fsockopen ('ssl://www.paypal.com', 443, $errno, $errstr, 30);
 
 if (!$fp) {
 // HTTP error...
@@ -323,6 +323,118 @@ $promotion_name = $row['promotion_name'];
 $discount = $row['discount'];
 
 }
+
+//===========================
+//  pull registered sessions
+//===========================
+
+// adding registered tutorials to view
+
+$sql_sessions = "SELECT ";
+$sql_sessions .= "session, ";
+$sql_sessions .= "amt_paid, ";
+$sql_sessions .= "talk_id, ";
+$sql_sessions .= "title ";
+$sql_sessions .= "FROM registered_sessions ";
+$sql_sessions .= "LEFT JOIN sessions ";
+$sql_sessions .= "ON session_id = sessions.id ";
+$sql_sessions .= "LEFT JOIN registrations ";
+$sql_sessions .= "ON registration_id = registrations.id ";
+$sql_sessions .= "LEFT JOIN registered_tutorials ";
+$sql_sessions .= "ON registered_session_id = registered_sessions.id ";
+$sql_sessions .= "LEFT JOIN talks ";
+$sql_sessions .= "ON talk_id = talks.id ";
+$sql_sessions .= "WHERE participant_id = $participant_id ";
+$sql_sessions .= "AND registrations.conference_id = 3";
+
+$total_sessions = @mysql_query($sql_sessions, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+$total_found_sessions = @mysql_num_rows($total_sessions);
+
+$last_session = '';
+$counter = 0;
+
+do {
+  if ($row['session'] != '')
+  {
+    if ($row['session'] != $last_session) 
+    {
+     $display_sessions .=
+     $row['session'] . " - $" . $row['amt_paid'] . "
+";
+
+  }
+
+$last_session = $row['session'];
+$counter = $counter + 1;
+}
+}
+while($row = mysql_fetch_array($total_sessions));
+
+
+if ($tshirt_type_id == 1)
+  {
+    $tshirt_type = "womens/fitted";
+  }
+if ($tshirt_type_id == 2)
+  {
+    $tshirt_type = "mens/unisex";
+  }
+
+if ($tshirt_size_id == 1)
+  {
+    $tshirt_size = "XXL";
+  }
+if ($tshirt_size_id == 2)
+  {
+    $tshirt_size = "XL";
+  }
+if ($tshirt_size_id == 3)
+  {
+    $tshirt_size = "L";
+  }
+if ($tshirt_size_id == 4)
+  {
+    $tshirt_size = "M";
+  }
+if ($tshirt_size_id == 5)
+  {
+    $tshirt_size = "S";
+  }
+
+
+$tshirt_size_id = $_POST['option_name1_'.$tshirt_item_no];
+
+
+$to = $billTo_email;
+//$to = 'jivanoff@enthought.com';
+$subject = 'SciPy2014 | Payment';
+$message = "Thank you for registering for SciPy 2014.  You have been registered with the following information:
+
+Name:    $shipTo_firstName $shipTo_lastName
+Email:   $billTo_email
+T-shirt size: $tshirt_type - $tshirt_size
+
+Registration Type: ";
+
+$message .= $_POST['option_name2_1'];
+
+$message .= "
+
+Sessions:
+$display_sessions
+
+
+Hotel Booking 
+--------------------------------------------------
+On-site lodging for SciPy 2014 is available at the AT&T Executive Conference Center Hotel.
+To make reservations, go to https://resweb.passkey.com/go/SCIPYM0714
+
+";
+
+$headers .= "From: noreply@scipy.org\r\n";
+$headers .= "Bcc: jivanoff@enthought.com\r\n";
+mail($to, $subject, $message, $headers);
+
 
 }
  

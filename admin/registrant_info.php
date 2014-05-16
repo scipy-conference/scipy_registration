@@ -198,7 +198,8 @@ $sql_sessions .= "ON registered_session_id = registered_sessions.id ";
 $sql_sessions .= "LEFT JOIN talks ";
 $sql_sessions .= "ON talk_id = talks.id ";
 $sql_sessions .= "WHERE participant_id = $participant_id ";
-$sql_sessions .= "AND registrations.conference_id = 3";
+$sql_sessions .= "AND registrations.conference_id = 3 ";
+$sql_sessions .= "ORDER BY session_id";
 
 $total_sessions = @mysql_query($sql_sessions, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
 $total_found_sessions = @mysql_num_rows($total_sessions);
@@ -297,6 +298,16 @@ $(document).ready(function(){
 </div>
 </div>
 
+<div class="row">
+<div class="cell">
+<form name="form_edit" method="post" action="registrant_edit.php?id=<?php echo $participant_id ?>">
+
+<div align="center" style="margin-top: 1em;">
+  <input type="submit" value="Edit registrant" >
+</div>
+</form>
+</div>
+<div class="cell">
 <form name="form1" method="post" action="<?php echo $SERVER['SCRIPT_NAME'] ?>">
 <input type="hidden" name="participant_id" value="<?php echo $participant_id ?>" />
 <input type="hidden" name="registration_id" value="<?php echo $registration_id ?>" />
@@ -305,7 +316,8 @@ $(document).ready(function(){
   <input type="submit" class="delete" value="delete registrant">
 </div>
 </form>
-
+</div>
+</div>
 
 </section>
 
