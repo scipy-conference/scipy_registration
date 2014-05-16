@@ -49,6 +49,29 @@ $registered_amt_paid=number_format($row['amt_paid'],2);
 }
 
 //===========================
+//  country map summary
+//===========================
+
+$country_map['Country'] = 'Participants';
+
+$sql_country_map = "SELECT  ";
+$sql_country_map .= "country, ";
+$sql_country_map .= "COUNT(country) AS qty  ";
+$sql_country_map .= "FROM participants  ";
+$sql_country_map .= "LEFT JOIN registrations ON  ";
+$sql_country_map .= "participant_id = participants.id  ";
+$sql_country_map .= "WHERE conference_id = 3 ";
+$sql_country_map .= "AND country != \"\"";
+$sql_country_map .= "GROUP BY country";
+
+$total_country_map = @mysql_query($sql_country_map, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+
+while ($row = mysql_fetch_array($total_country_map)) {
+
+$country_map = array($row['country'],$row['qty']);
+}
+
+//===========================
 //  daily registrations
 //===========================
 
@@ -378,6 +401,7 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 <?php @ require_once ("../inc/second_level_header.php"); ?>
 
 <link rel="shortcut icon" href="http://conference.scipy.org/scipy2013/favicon.ico" />
+
 </head>
 
 <body>
@@ -397,6 +421,7 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 <h2>Paid Registrations</h2>
 <p>Total Registered: <strong><?php echo $registered_qty ?></strong></p>
 <div align="center">
+
 <?php echo "$daily_reg_chart" ?>
 <br />
 <?php echo"$chart_reg" ?>
