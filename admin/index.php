@@ -52,7 +52,9 @@ $registered_amt_paid=number_format($row['amt_paid'],2);
 //  country map summary
 //===========================
 
-$country_map['Country'] = 'Participants';
+$country_map = array('Country','Participants');
+$country_II .= "['Country','Participants'],";
+
 
 $sql_country_map = "SELECT  ";
 $sql_country_map .= "country, ";
@@ -68,8 +70,13 @@ $total_country_map = @mysql_query($sql_country_map, $connection) or die("Error #
 
 while ($row = mysql_fetch_array($total_country_map)) {
 
-$country_map = array($row['country'],$row['qty']);
+$country_map[$row['country']] = $row['qty'];
+
+$country_II .= "['" . $row['country'] . "', " . $row['qty'] . "],";
 }
+
+$country_II = rtrim($country_II, ",");
+
 
 //===========================
 //  daily registrations
@@ -105,7 +112,7 @@ cht=bvs
 &chxl=0:|$line_src_l|
 &chco=2b5da6
 &chm=N*f1*,999999,0,-1,10,,e::4
-&chtt=Daily+Registrations\" width=\"350\" height=\"175\">";
+&chtt=\" width=\"280\" height=\"144\">";
 
 //===========================
 //  registered pie
@@ -135,7 +142,7 @@ while ($row = mysql_fetch_array($total_result_reg_pie)) {
     $reg_pie_src_l =implode ("|" ,$reg_text_array );
 }
 
-$chart_reg = "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$reg_pie_src_d&chs=434x133&chl=$reg_pie_src_l&chco=2b5da6\" width=\"434\" height=\"133\">";
+$chart_reg = "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$reg_pie_src_d&chs=347x106&chl=$reg_pie_src_l&chco=2b5da6\" width=\"347\" height=\"106\">";
 
 
 $row_1="odd";
@@ -402,6 +409,23 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 
 <link rel="shortcut icon" href="http://conference.scipy.org/scipy2013/favicon.ico" />
 
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+        <?php echo $country_II ?>
+         ]);
+
+        var options = {minValue: 0,  colors: ['#cadbeb','#2b5da6']};
+
+        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    };
+    </script>
+
 </head>
 
 <body>
@@ -418,15 +442,27 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 
 <h1>Admin</h1>
 
-<h2>Paid Registrations</h2>
+<h2>Registrations</h2>
 <p>Total Registered: <strong><?php echo $registered_qty ?></strong></p>
 <div align="center">
 
-<?php echo "$daily_reg_chart" ?>
-<br />
-<?php echo"$chart_reg" ?>
+<div class="row">
+  <h3 style="text-align: center;">Participants Locations</h3>
+<div id="chart_div" style="width: 600px; height: 330px;"></div>
+</div>
 
-<table id="registrants_table" width="350">
+<div class="row" style="margin-top: 3em;">
+  <div class="cell">
+  <h3>Daily Registrations</h3>
+<?php echo "$daily_reg_chart" ?>
+  </div>
+  <div class="cell">
+  <h3 style="margin-bottom: 3em;">Registration Types</h3>
+<?php echo"$chart_reg" ?>
+  </div>
+</div>
+
+<table id="registrants_table" width="450">
 <tr>
   <th>Participant Type<br />[qty]</th>
   <th><div align="right">Conference</div></th>
