@@ -227,6 +227,145 @@ $pp["os0_" . $index] = $display_size;
 $pp["on0_" . $index] = $tshirt_size;
 $pp["on1_" . $index] = $tshirt_type;
 
+//===========================
+// Tutorials
+//===========================
+
+$sql_presenters = "SELECT ";
+$sql_presenters .= "presenters.id AS presenter_id, ";
+$sql_presenters .= "talks.id AS talk_id, ";
+$sql_presenters .= "schedules.id AS schedule_id, ";
+$sql_presenters .= "talks.presenter_id AS pi, ";
+$sql_presenters .= "last_name, ";
+$sql_presenters .= "first_name, ";
+$sql_presenters .= "affiliation, ";
+$sql_presenters .= "bio, ";
+$sql_presenters .= "title, ";
+$sql_presenters .= "track, ";
+$sql_presenters .= "authors, ";
+$sql_presenters .= "talks.description, ";
+$sql_presenters .= "location_id, ";
+$sql_presenters .= "start_time, ";
+$sql_presenters .= "name, ";
+$sql_presenters .= "DATE_FORMAT(start_time, '%h:%i %p') AS start_time_f, ";
+$sql_presenters .= "DATE_FORMAT(end_time, '%h:%i %p') AS end_time_f, ";
+$sql_presenters .= "DATE_FORMAT(start_time, '%W - %b %D') AS schedule_day, ";
+$sql_presenters .= "DATE_FORMAT(start_time, '%m%d_%p') AS radio_attribute ";
+
+$sql_presenters .= "FROM schedules ";
+
+$sql_presenters .= "LEFT JOIN talks ";
+$sql_presenters .= "ON schedules.talk_id = talks.id ";
+
+$sql_presenters .= "LEFT JOIN locations ";
+$sql_presenters .= "ON schedules.location_id = locations.id ";
+
+$sql_presenters .= "LEFT JOIN presenters ";
+$sql_presenters .= "ON presenter_id = presenters.id ";
+
+$sql_presenters .= "LEFT JOIN license_types ";
+$sql_presenters .= "ON license_type_id = license_types.id ";
+
+$sql_presenters .= "WHERE talks.conference_id = 3 ";
+$sql_presenters .= "AND track IN ('Introductory','Intermediate','Advanced','Topics') ";
+$sql_presenters .= "ORDER BY start_time, FIELD(track,'Introductory','Intermediate','Advanced','Topics')";
+
+
+$total_presenters = @mysql_query($sql_presenters, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+$total_presenters_2 = @mysql_query($sql_presenters, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+$last_start_time = '';
+$last_schedule_day = '';
+
+do {
+
+if ($row['title'] != '')
+  {
+//
+if ($row['schedule_day'] != $last_schedule_day) 
+{
+$display_block .="
+<tr>
+  <th colspan=\"5\">" . $row['schedule_day'] . "</th>
+</tr>
+  <tr>
+    <th width=\"13%\">Time</th>
+    <th width=\"22%\">Introductory</th>
+    <th width=\"22%\">Intermediate</th>
+    <th width=\"22%\">Advanced</th>
+    <th width=\"22%\">Topics</th>
+  </tr>";
+$last_schedule_day = $row['schedule_day'];
+}
+//
+
+  if ($row['start_time'] != $last_start_time) 
+     {
+       $display_block .="  <tr>
+        <td>" . $row['start_time_f'] . " - " . $row['end_time_f'] . "</td>";
+     }
+
+    if ($row['track'] == 'Introductory')
+      { 
+//      if($row['talk_id'] == '109')
+//        {
+//        $display_block .="
+//        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+//        $last_start_time = $row['start_time'];
+//        }
+//        else
+//        {
+        $display_block .="
+        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        $last_start_time = $row['start_time'];
+//        }
+      }
+   elseif ($row['track'] == 'Intermediate')
+     { 
+//      if($row['talk_id'] == '107')
+//        {
+//        $display_block .="
+//        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+//        $last_start_time = $row['start_time'];
+//        }
+//        else
+//        {
+        $display_block .="
+        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        $last_start_time = $row['start_time'];
+//        }
+   }
+ elseif ($row['track'] == 'Advanced')
+   { 
+      if($row['talk_id'] == '102')
+        {
+        $display_block .="
+        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+        $last_start_time = $row['start_time'];
+        }
+        else
+        {
+        $display_block .="
+        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        $last_start_time = $row['start_time'];
+        }
+   }
+ elseif ($row['track'] == 'Topics')
+   { 
+        $display_block .="
+        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        $last_start_time = $row['start_time'];
+   }
+  else 
+   {
+$display_block .="
+<td>---</td>";
+
+   }
+}
+}
+
+while ($row = mysql_fetch_array($total_presenters));
+
 
 ?>
 
@@ -264,6 +403,8 @@ $pp["on1_" . $index] = $tshirt_type;
 
 <div id="container">
 
+<?php include('inc/page_headers.php') ?>
+
 <section id="sidebar">
 &nbsp;
 </section>
@@ -271,6 +412,30 @@ $pp["on1_" . $index] = $tshirt_type;
 
 <section id="main-content">
 <h1>Registration Cont.</h1>
+
+<!-- switch between sandbox and www and business name jim30@toliveistofly.com vs Accounting@enthought.com -->
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_cart">
+<input type="hidden" name="upload" value="1">
+<input type="hidden" name="business" value="jim30@toliveistofly.com">
+
+<?php if ($session_id_7 == "on") 
+  {
+?>
+<p>You have elected to attend tutorials, please indicate the tutorials you would like to attend</p>
+
+<table  class="schedule">
+<?php echo $display_block ?>
+</table>
+
+<?php
+
+
+  }
+
+?>
+
+
 <hr />
 
 <p>Please confirm these prices and submit your payment information below.</p>
@@ -295,11 +460,7 @@ $pp["on1_" . $index] = $tshirt_type;
 <div style="clear:both;"></div>
 <hr />
 
-<!-- switch between sandbox and www and business name jim30@toliveistofly.com vs Accounting@enthought.com -->
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_cart">
-<input type="hidden" name="upload" value="1">
-<input type="hidden" name="business" value="accounting@enthought.com">
+
 
 
 <!-- #### Summary Table  -->

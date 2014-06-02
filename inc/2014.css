@@ -717,3 +717,6 @@ img.sideslung {
   text-align: left;
   }
 
+#tutorial_display {
+  display: none;
+  }
