@@ -258,10 +258,10 @@ $display_block .="
 </tr>
   <tr>
     <th width=\"13%\">Time</th>
-    <th width=\"22%\">Introductory</th>
-    <th width=\"22%\">Intermediate</th>
-    <th width=\"22%\">Advanced</th>
-    <th width=\"22%\">Topics</th>
+    <th width=\"22%\" style=\"background: #cadbeb;\">Introductory</th>
+    <th width=\"22%\" style=\"background: #9fbdeb;\">Intermediate</th>
+    <th width=\"22%\" style=\"background: #4f82c8;\">Advanced</th>
+    <th width=\"22%\" style=\"background: #316fc6;\">Topics</th>
   </tr>";
 $last_schedule_day = $row['schedule_day'];
 }
@@ -284,7 +284,7 @@ $last_schedule_day = $row['schedule_day'];
 //        else
 //        {
         $display_block .="
-        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        <td class=\"tutorial_selection\"><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" />" . $row['title'] . "</td>";
         $last_start_time = $row['start_time'];
 //        }
       }
@@ -299,7 +299,7 @@ $last_schedule_day = $row['schedule_day'];
 //        else
 //        {
         $display_block .="
-        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        <td class=\"tutorial_selection\"><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" />" . $row['title'] . "</td>";
         $last_start_time = $row['start_time'];
 //        }
    }
@@ -314,14 +314,14 @@ $last_schedule_day = $row['schedule_day'];
         else
         {
         $display_block .="
-        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        <td class=\"tutorial_selection\"><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" />" . $row['title'] . "</td>";
         $last_start_time = $row['start_time'];
         }
    }
  elseif ($row['track'] == 'Topics')
    { 
         $display_block .="
-        <td><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" /><br />" . $row['title'] . "</td>";
+        <td class=\"tutorial_selection\"><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" />" . $row['title'] . "</td>";
         $last_start_time = $row['start_time'];
    }
   else 
@@ -363,7 +363,13 @@ while ($row = mysql_fetch_array($total_presenters));
 <script>
 function tutorialDisplay()
 {
-document.getElementById("tutorial_display").style.display="block";
+var div = document.getElementById("tutorial_display")
+if (div.style.display !== 'block') {
+        div.style.display = 'block';
+    }
+    else {
+        div.style.display = 'none';
+    }
 }
 
 </script>
