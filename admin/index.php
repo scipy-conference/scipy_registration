@@ -266,7 +266,7 @@ $sql_presenters .= "bio, ";
 $sql_presenters .= "title, ";
 $sql_presenters .= "track, ";
 $sql_presenters .= "authors, ";
-$sql_presenters .= "talks.description, ";
+$sql_presenters .= "locations.description, ";
 $sql_presenters .= "location_id, ";
 $sql_presenters .= "start_time, ";
 $sql_presenters .= "name, ";
@@ -343,7 +343,7 @@ $last_schedule_day = $row['schedule_day'];
 //        else
 //        {
         $display_block .="
-        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        <td>" . $row['title'] . "<span style=\"font-size: 0.75em;\"><ul><li>Rm: " . $row['name'] . "</li><li>" . $row['description'] . "</li></ul></span></td><td>" . $row['qty'] . "</td>";
         $last_start_time = $row['start_time'];
 //        }
       }
@@ -358,7 +358,7 @@ $last_schedule_day = $row['schedule_day'];
 //        else
 //        {
         $display_block .="
-        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        <td>" . $row['title'] . "<span style=\"font-size: 0.75em;\"><ul><li>Rm: " . $row['name'] . "</li><li>" . $row['description'] . "</li></ul></span></td><td>" . $row['qty'] . "</td>";
         $last_start_time = $row['start_time'];
 //        }
    }
@@ -367,20 +367,20 @@ $last_schedule_day = $row['schedule_day'];
       if($row['talk_id'] == '102')
         {
         $display_block .="
-        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+        <td>" . $row['title'] . "<span style=\"font-size: 0.75em;\"><ul><li>Rm: " . $row['name'] . "</li><li>" . $row['description'] . "</li></ul></span></td><td>" . $row['qty'] . "</td>";
         $last_start_time = $row['start_time'];
         }
         else
         {
         $display_block .="
-        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        <td>" . $row['title'] . "<span style=\"font-size: 0.75em;\"><ul><li>Rm: " . $row['name'] . "</li><li>" . $row['description'] . "</li></ul></span></td><td>" . $row['qty'] . "</td>";
         $last_start_time = $row['start_time'];
         }
    }
  elseif ($row['track'] == 'Topics')
    { 
         $display_block .="
-        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        <td>" . $row['title'] . "<span style=\"font-size: 0.75em;\"><ul><li>Rm: " . $row['name'] . "</li><li>" . $row['description'] . "</li></ul></span></td><td>" . $row['qty'] . "</td>";
         $last_start_time = $row['start_time'];
    }
   else 
