@@ -360,19 +360,7 @@ while ($row = mysql_fetch_array($total_presenters));
             });
         </script>
 
-<script>
-function tutorialDisplay()
-{
-var div = document.getElementById("tutorial_display")
-if (div.style.display !== 'block') {
-        div.style.display = 'block';
-    }
-    else {
-        div.style.display = 'none';
-    }
-}
 
-</script>
 
 <?php include('inc/header.php') ?>
 

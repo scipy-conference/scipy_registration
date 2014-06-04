@@ -250,6 +250,50 @@ $display_sess_paid_sum .="<tr>
 }
 while($row = mysql_fetch_array($total_result_sess_sum));
 
+//===========================
+//  pull tutorial registrations details
+//===========================
+
+$sql_tutorial_sum = "SELECT  ";
+$sql_tutorial_sum .= "`talks`.`title`, ";
+$sql_tutorial_sum .= "`talks`.`track`, ";
+$sql_tutorial_sum .= "`talk_id`, ";
+$sql_tutorial_sum .= "COUNT(talk_id) AS `qty` ";
+$sql_tutorial_sum .= "FROM talks  ";
+$sql_tutorial_sum .= "LEFT JOIN registered_tutorials  ";
+$sql_tutorial_sum .= "ON talk_id = talks.id  ";
+$sql_tutorial_sum .= "WHERE talks.id IN (264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279)";
+$sql_tutorial_sum .= "GROUP BY talks.id ";
+$sql_tutorial_sum .= "ORDER BY talks.id ";
+
+
+$total_result_tutorial_sum = @mysql_query($sql_tutorial_sum, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+$total_found_tutorial_sum = @mysql_num_rows($total_result_tutorial_sum);
+
+while($row = mysql_fetch_array($total_result_tutorial_sum)) {
+
+$title = $row['title'];
+$track = $row['track'];
+$qty = $row['qty'];
+
+if ($track == "Introductory")
+  {
+    $display_intro .= "<tr><td>$title</td><td>$qty</td></tr>";
+  } 
+if ($track == "Intermediate")
+  {
+    $display_inter .= "<tr><td>$title</td><td>$qty</td></tr>";
+  } 
+if ($track == "Advanced")
+  {
+    $display_advanced .= "<tr><td>$title</td><td>$qty</td></tr>";
+  } 
+if ($track == "Topics")
+  {
+    $display_topics .= "<tr><td>$title</td><td>$qty</td></tr>";
+  } 
+}
+
 
 //===========================
 //  pull ladies tshirts summary
@@ -497,28 +541,36 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 <h2>Tutorials</h2>
 
 <div class="row">
-<div class="cell" style="width: 28%;">
-<table id="registrants_table" width="200" style="margin: 0 auto;">
+<div class="cell" style="width: 20%;">
+<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
 <tr>
     <th colspan="2">Introductory</th>
   </tr>
 <?php echo "$display_intro" ?>
 </table>
 </div>
-<div class="cell" style="width: 28%;">
-<table id="registrants_table" width="200" style="margin: 0 auto;">
+<div class="cell" style="width: 20%;">
+<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
 <tr>
     <th colspan="2">Intermediate</th>
   </tr>
 <?php echo "$display_inter" ?>
 </table>
 </div>
-<div class="cell" style="width: 28%;">
-<table id="registrants_table" width="200" style="margin: 0 auto;">
+<div class="cell" style="width: 20%;">
+<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
 <tr>
     <th colspan="2">Advanced</th>
   </tr>
 <?php echo "$display_advanced" ?>
+</table>
+</div>
+<div class="cell" style="width: 20%;">
+<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
+<tr>
+    <th colspan="2">Topics</th>
+  </tr>
+<?php echo "$display_topics" ?>
 </table>
 </div>
 </div>
