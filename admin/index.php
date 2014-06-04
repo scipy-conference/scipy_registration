@@ -251,49 +251,148 @@ $display_sess_paid_sum .="<tr>
 while($row = mysql_fetch_array($total_result_sess_sum));
 
 //===========================
-//  pull tutorial registrations details
+// Tutorials
 //===========================
 
-$sql_tutorial_sum = "SELECT  ";
-$sql_tutorial_sum .= "`talks`.`title`, ";
-$sql_tutorial_sum .= "`talks`.`track`, ";
-$sql_tutorial_sum .= "`talk_id`, ";
-$sql_tutorial_sum .= "COUNT(talk_id) AS `qty` ";
-$sql_tutorial_sum .= "FROM talks  ";
-$sql_tutorial_sum .= "LEFT JOIN registered_tutorials  ";
-$sql_tutorial_sum .= "ON talk_id = talks.id  ";
-$sql_tutorial_sum .= "WHERE talks.id IN (264,265,266,267,268,269,270,271,272,273,274,275,276,277,278,279)";
-$sql_tutorial_sum .= "GROUP BY talks.id ";
-$sql_tutorial_sum .= "ORDER BY talks.id ";
+$sql_presenters = "SELECT ";
+$sql_presenters .= "presenters.id AS presenter_id, ";
+$sql_presenters .= "talks.id AS talk_id, ";
+$sql_presenters .= "schedules.id AS schedule_id, ";
+$sql_presenters .= "talks.presenter_id AS pi, ";
+$sql_presenters .= "last_name, ";
+$sql_presenters .= "first_name, ";
+$sql_presenters .= "affiliation, ";
+$sql_presenters .= "bio, ";
+$sql_presenters .= "title, ";
+$sql_presenters .= "track, ";
+$sql_presenters .= "authors, ";
+$sql_presenters .= "talks.description, ";
+$sql_presenters .= "location_id, ";
+$sql_presenters .= "start_time, ";
+$sql_presenters .= "name, ";
+$sql_presenters .= "COUNT(registered_tutorials.talk_id) AS `qty`, ";
+$sql_presenters .= "DATE_FORMAT(start_time, '%h:%i %p') AS start_time_f, ";
+$sql_presenters .= "DATE_FORMAT(end_time, '%h:%i %p') AS end_time_f, ";
+$sql_presenters .= "DATE_FORMAT(start_time, '%W - %b %D') AS schedule_day, ";
+$sql_presenters .= "DATE_FORMAT(start_time, '%m%d_%p') AS radio_attribute ";
+
+$sql_presenters .= "FROM schedules ";
+
+$sql_presenters .= "LEFT JOIN talks ";
+$sql_presenters .= "ON schedules.talk_id = talks.id ";
+
+$sql_presenters .= "LEFT JOIN registered_tutorials  ";
+$sql_presenters .= "ON registered_tutorials.talk_id = talks.id  ";
+
+$sql_presenters .= "LEFT JOIN locations ";
+$sql_presenters .= "ON schedules.location_id = locations.id ";
+
+$sql_presenters .= "LEFT JOIN presenters ";
+$sql_presenters .= "ON presenter_id = presenters.id ";
+
+$sql_presenters .= "LEFT JOIN license_types ";
+$sql_presenters .= "ON license_type_id = license_types.id ";
+
+$sql_presenters .= "WHERE talks.conference_id = 3 ";
+$sql_presenters .= "AND track IN ('Introductory','Intermediate','Advanced','Topics') ";
+$sql_presenters .= "GROUP BY talks.id ";
+$sql_presenters .= "ORDER BY start_time, FIELD(track,'Introductory','Intermediate','Advanced','Topics')";
 
 
-$total_result_tutorial_sum = @mysql_query($sql_tutorial_sum, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
-$total_found_tutorial_sum = @mysql_num_rows($total_result_tutorial_sum);
+$total_presenters = @mysql_query($sql_presenters, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+$total_presenters_2 = @mysql_query($sql_presenters, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+$last_start_time = '';
+$last_schedule_day = '';
 
-while($row = mysql_fetch_array($total_result_tutorial_sum)) {
+do {
 
-$title = $row['title'];
-$track = $row['track'];
-$qty = $row['qty'];
-
-if ($track == "Introductory")
+if ($row['title'] != '')
   {
-    $display_intro .= "<tr><td>$title</td><td>$qty</td></tr>";
-  } 
-if ($track == "Intermediate")
-  {
-    $display_inter .= "<tr><td>$title</td><td>$qty</td></tr>";
-  } 
-if ($track == "Advanced")
-  {
-    $display_advanced .= "<tr><td>$title</td><td>$qty</td></tr>";
-  } 
-if ($track == "Topics")
-  {
-    $display_topics .= "<tr><td>$title</td><td>$qty</td></tr>";
-  } 
+//
+if ($row['schedule_day'] != $last_schedule_day) 
+{
+$display_block .="
+<tr>
+  <th colspan=\"9\">" . $row['schedule_day'] . "</th>
+</tr>
+  <tr>
+    <th width=\"13%\">Time</th>
+    <th colspan=\"2\" width=\"22%\" style=\"background: #cadbeb;\">Introductory</th>
+    <th colspan=\"2\" width=\"22%\" style=\"background: #9fbdeb;\">Intermediate</th>
+    <th colspan=\"2\" width=\"22%\" style=\"background: #4f82c8;\">Advanced</th>
+    <th colspan=\"2\" width=\"22%\" style=\"background: #316fc6;\">Topics</th>
+  </tr>";
+$last_schedule_day = $row['schedule_day'];
+}
+//
+
+  if ($row['start_time'] != $last_start_time) 
+     {
+       $display_block .="  <tr>
+        <td>" . $row['start_time_f'] . " - " . $row['end_time_f'] . "</td>";
+     }
+
+    if ($row['track'] == 'Introductory')
+      { 
+//      if($row['talk_id'] == '109')
+//        {
+//        $display_block .="
+//        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+//        $last_start_time = $row['start_time'];
+//        }
+//        else
+//        {
+        $display_block .="
+        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        $last_start_time = $row['start_time'];
+//        }
+      }
+   elseif ($row['track'] == 'Intermediate')
+     { 
+//      if($row['talk_id'] == '107')
+//        {
+//        $display_block .="
+//        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+//        $last_start_time = $row['start_time'];
+//        }
+//        else
+//        {
+        $display_block .="
+        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        $last_start_time = $row['start_time'];
+//        }
+   }
+ elseif ($row['track'] == 'Advanced')
+   { 
+      if($row['talk_id'] == '102')
+        {
+        $display_block .="
+        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+        $last_start_time = $row['start_time'];
+        }
+        else
+        {
+        $display_block .="
+        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        $last_start_time = $row['start_time'];
+        }
+   }
+ elseif ($row['track'] == 'Topics')
+   { 
+        $display_block .="
+        <td>" . $row['title'] . "</td><td>" . $row['qty'] . "</td>";
+        $last_start_time = $row['start_time'];
+   }
+  else 
+   {
+$display_block .="
+<td>---</td>";
+
+   }
+}
 }
 
+while ($row = mysql_fetch_array($total_presenters));
 
 //===========================
 //  pull ladies tshirts summary
@@ -540,41 +639,14 @@ $chart_uni= "<img src=\"http://chart.apis.google.com/chart?cht=p&chd=t:$u_pie_sr
 <div class="row">
 <h2>Tutorials</h2>
 
-<div class="row">
-<div class="cell" style="width: 20%;">
-<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
-<tr>
-    <th colspan="2">Introductory</th>
-  </tr>
-<?php echo "$display_intro" ?>
-</table>
-</div>
-<div class="cell" style="width: 20%;">
-<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
-<tr>
-    <th colspan="2">Intermediate</th>
-  </tr>
-<?php echo "$display_inter" ?>
-</table>
-</div>
-<div class="cell" style="width: 20%;">
-<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
-<tr>
-    <th colspan="2">Advanced</th>
-  </tr>
-<?php echo "$display_advanced" ?>
-</table>
-</div>
-<div class="cell" style="width: 20%;">
-<table class="registrants_table schedule" width="170" style="margin: 0 auto;">
-<tr>
-    <th colspan="2">Topics</th>
-  </tr>
-<?php echo "$display_topics" ?>
-</table>
-</div>
-</div>
+<div class="cell" style="width: 90%;">
+<table class="registrants_table schedule" width="700" style="margin: 0 auto;">
 
+<?php echo "$display_block" ?>
+
+</table>
+</div>
+<div style="clear: both;"></div>
 
 <hr />
 <div class="row">
