@@ -215,10 +215,10 @@ do {
      $display_sessions .="
      <li>" . $row['session'] . " - $" . $row['amt_paid'] . "</li>";
         
-//          if ($row['session'] == 'Tutorials')
-//  {
-//    $display_sessions .="<ul><li>" . $row['title'] . "</li>";
-//  }
+          if ($row['session'] == 'Tutorials')
+  {
+    $display_sessions .="<ul><li>" . $row['title'] . "</li>";
+  }
   }
    elseif ($row['session'] == 'Tutorials')
   {

@@ -717,3 +717,13 @@ img.sideslung {
   text-align: left;
   }
 
+#tutorial_display {
+  display: none;
+  }
+
+.tutorial_selection {
+  text-indent: -2em; 
+  padding-left: 2em;
+  }
+
+

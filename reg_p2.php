@@ -264,6 +264,8 @@ $pp["on1_" . $index] = $tshirt_type;
 
 <div id="container">
 
+<?php include('inc/page_headers.php') ?>
+
 <section id="sidebar">
 &nbsp;
 </section>
@@ -271,6 +273,13 @@ $pp["on1_" . $index] = $tshirt_type;
 
 <section id="main-content">
 <h1>Registration Cont.</h1>
+
+<!-- switch between sandbox and www and business name jim30@toliveistofly.com vs Accounting@enthought.com -->
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_cart">
+<input type="hidden" name="upload" value="1">
+<input type="hidden" name="business" value="jim30@toliveistofly.com">
+
 <hr />
 
 <p>Please confirm these prices and submit your payment information below.</p>
@@ -295,11 +304,7 @@ $pp["on1_" . $index] = $tshirt_type;
 <div style="clear:both;"></div>
 <hr />
 
-<!-- switch between sandbox and www and business name jim30@toliveistofly.com vs Accounting@enthought.com -->
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_cart">
-<input type="hidden" name="upload" value="1">
-<input type="hidden" name="business" value="accounting@enthought.com">
+
 
 
 <!-- #### Summary Table  -->
