@@ -431,15 +431,12 @@ while ($row = mysql_fetch_array($total_presenters));
 </table>
 <hr />
 <h2> Women in Scientific Computing Luncheon </h2>
-<div class="row">
-  <div class="cell" style="width: 40%; padding: 0 0 0 0;">Speaker TBA</div>
-  <div class="cell" style="width: 30%; float: right; padding: 0 0 0 0; text-align: right;">$ 10.00</div>
-</div>
+<div class="highlight">SOLD OUT</div>
 <div class="row">
   <div class="cell" style="width: 100%; font-size: 0.85em; padding: 0 0 0 0;">12:00PM Wed - July 9th,  El Mercado Restaurant</div>
 </div>
 
-<div style="clear: both; text-align: center;"><input name="session_id_10" type="checkbox">Yes</div>
+<div style="clear: both; text-align: center;"></div>
 </div>
 <div class="cell">
 
