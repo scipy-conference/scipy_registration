@@ -275,10 +275,10 @@ $pp["on1_" . $index] = $tshirt_type;
 <h1>Registration Cont.</h1>
 
 <!-- switch between sandbox and www and business name jim30@toliveistofly.com vs Accounting@enthought.com -->
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_cart">
 <input type="hidden" name="upload" value="1">
-<input type="hidden" name="business" value="jim30@toliveistofly.com">
+<input type="hidden" name="business" value="Accounting@enthought.com">
 
 <hr />
 
