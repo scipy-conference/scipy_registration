@@ -3,11 +3,14 @@ session_start();
 
 include('inc/db_conn.php');
 
+$tutorials_selected = 0;
+
 $reg_code = $_GET['reg_code'];
 
 $sql_participant = "SELECT ";
 $sql_participant .= "last_name, ";
 $sql_participant .= "first_name, ";
+$sql_participant .= "participant_id, ";
 $sql_participant .= "registered_sessions.id AS 'registered_session_id'";
 $sql_participant .= "FROM registered_sessions ";
 $sql_participant .= "LEFT JOIN registrations ON registration_id = registrations.id ";
@@ -19,6 +22,7 @@ $total_participant = @mysql_query($sql_participant, $connection) or die("Error #
 while($row = mysql_fetch_array($total_participant))
 {
 
+$participant_id = $row['participant_id'];
 $last_name = $row['last_name'];
 $first_name = $row['first_name'];
 $registered_session_id = $row['registered_session_id'];
@@ -163,6 +167,109 @@ $display_block .="
 
 while ($row = mysql_fetch_array($total_presenters));
 
+//===========================
+//  pull total registered
+//===========================
+
+$sql_registrants = "SELECT ";
+$sql_registrants .= "registrations.id, ";
+$sql_registrants .= "participants.last_name, ";
+$sql_registrants .= "participants.first_name, ";
+$sql_registrants .= "affiliation, ";
+$sql_registrants .= "email, ";
+$sql_registrants .= "participants.address1, ";
+$sql_registrants .= "participants.address2, ";
+$sql_registrants .= "participants.city, ";
+$sql_registrants .= "participants.state, ";
+$sql_registrants .= "participants.postal_code, ";
+$sql_registrants .= "participants.country, ";
+$sql_registrants .= "DATE_FORMAT(registrations.created_at, '%b %d') AS reg_date, ";
+$sql_registrants .= "type, ";
+$sql_registrants .= "phone ";
+$sql_registrants .= "FROM registrations ";
+$sql_registrants .= "LEFT JOIN participants ";
+$sql_registrants .= "ON registrations.participant_id = participants.id ";
+$sql_registrants .= "LEFT JOIN participant_types ";
+$sql_registrants .= "ON participant_type_id = participant_types.id ";
+$sql_registrants .= "LEFT JOIN billings ";
+$sql_registrants .= "ON registrations.participant_id = participants.id ";
+$sql_registrants .= "WHERE registrations.participant_id = \"$participant_id\" ";
+$sql_registrants .= "AND registrations.conference_id = 3";
+
+
+$total_registrants = @mysql_query($sql_registrants, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+while($row = mysql_fetch_array($total_registrants))
+{
+
+$registration_id = $row['id'];
+$last_name = $row['last_name'];
+$first_name = $row['first_name'];
+$affiliation = $row['affiliation'];
+$email = $row['email'];
+$address1 = $row['address1'];
+$address2 = $row['address2'];
+$city = $row['city'];
+$state = $row['state'];
+$postal_code = $row['postal_code'];
+$country = strtoupper($row['country']);
+$reg_date = $row['reg_date'];
+$type = $row['type'];
+$phone = $row['phone'];
+}
+
+$sql_sessions = "SELECT ";
+$sql_sessions .= "session, ";
+$sql_sessions .= "amt_paid, ";
+$sql_sessions .= "talk_id, ";
+$sql_sessions .= "title ";
+$sql_sessions .= "FROM registered_sessions ";
+$sql_sessions .= "LEFT JOIN sessions ";
+$sql_sessions .= "ON session_id = sessions.id ";
+$sql_sessions .= "LEFT JOIN registrations ";
+$sql_sessions .= "ON registration_id = registrations.id ";
+$sql_sessions .= "LEFT JOIN registered_tutorials ";
+$sql_sessions .= "ON registered_session_id = registered_sessions.id ";
+$sql_sessions .= "LEFT JOIN talks ";
+$sql_sessions .= "ON talk_id = talks.id ";
+$sql_sessions .= "WHERE participant_id = $participant_id ";
+$sql_sessions .= "AND registrations.conference_id = 3 ";
+$sql_sessions .= "ORDER BY session_id";
+
+$total_sessions = @mysql_query($sql_sessions, $connection) or die("Error #". mysql_errno() . ": " . mysql_error());
+$total_found_sessions = @mysql_num_rows($total_sessions);
+
+$last_session = '';
+$counter = 0;
+
+do {
+  if ($row['session'] != '')
+  {
+    if ($row['session'] != $last_session) 
+    {
+     $display_sessions .="
+     <li>" . $row['session'] . " - $" . $row['amt_paid'] . "</li>";
+        
+          if ($row['session'] == 'Tutorials' && $row['title'] != "" )
+  {
+    $tutorials_selected = 1;
+    $display_sessions .="<ul><li>" . $row['title'] . "</li>";
+  }
+  }
+   elseif ($row['session'] == 'Tutorials')
+  {
+    $display_sessions .="<li>" . $row['title'] . "</li>";
+  }     
+$display_sessions .="";
+  }
+if ($counter == 4) {$display_sessions .="</ul>";}
+$last_session = $row['session'];
+$counter = $counter + 1;
+}
+while($row = mysql_fetch_array($total_sessions));
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -221,13 +328,24 @@ if (div.style.display !== 'block') {
 
 <h1>2014 Conference Registration</h1>
 
-<form id="formID" class="formular" method="post" action="tutorial_save.php">
+<div class="form_row">
+<h2>Registered Sessions:</h2>
 
+<p><?php echo "$first_name $last_name" ?> - registered at <strong><?php echo "$type" ?></strong> level on <span class="bold"><?php echo "$reg_date" ?></span>, for the following sessions:</p>
+<ul>
+<?php echo $display_sessions ?>
+</ul>
+</div>
+
+
+<br />
+<?php if ($tutorials_selected != 1) { ?>
 <div class="form_row">
 <h2>Tutorial Selection</h2>
 
+<p>You have elected to attend tutorials, please indicate the tutorials you would like to attend.</p>
 
-<p><?php echo "$first_name $last_name" ?> - you have elected to attend tutorials, please indicate the tutorials you would like to attend.</p>
+<form id="formID" class="formular" method="post" action="tutorial_save.php">
 <table  class="schedule">
 <?php echo $display_block ?>
 </table>
@@ -240,7 +358,7 @@ if (div.style.display !== 'block') {
 <div align="center">
   <input type="submit" name="submit" value="Save"/>
 </div>
-
+<?php } ?>
 
 </form>
 </section>
