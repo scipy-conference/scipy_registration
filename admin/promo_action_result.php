@@ -76,13 +76,17 @@ $exp_date = $row['exp_date'];
 
 <p>Promotion Code <?php echo "$code" ?> <?php echo $action ?> successfully!</p></p>
 
-id: <?php echo $id ?><br />
-code: <?php echo $code ?><br />
+<p>The Promotion Code URL is:</p>
+<ul>
+  <li><a href="https://conference.scipy.org/scipy_registration/registration.php?promotion_id=<?php echo "$code" ?>">https://conference.scipy.org/scipy_registration/registration.php?promotion_id=<?php echo "$code" ?></a></li>
+</ul>
+
+<p style="margin-top: 2em;">code: <?php echo $code ?><br />
 discount: <?php echo $discount ?><br />
 description: <?php echo $description ?><br />
 promotion_name: <?php echo $promotion_name ?><br />
 active_date: <?php echo $active_date ?><br />
-exp_date: <?php echo $exp_date ?><br />
+exp_date: <?php echo $exp_date ?></p>
 
 </section>
 

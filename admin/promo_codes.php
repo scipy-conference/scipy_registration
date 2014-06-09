@@ -95,7 +95,7 @@ while($row = mysql_fetch_array($total_result_discount));
 <?php echo $display_promotions ?>
 </table>
 
-
+<a href="promo_enter.php">Enter New Code</a>
 </section>
 
 
