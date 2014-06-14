@@ -6,6 +6,7 @@ $session_id_8 = $_POST['session_id_8'];
 $session_id_9 = $_POST['session_id_9'];
 $session_id_10 = $_POST['session_id_10'];
 
+
 $session_param = "AND ";
 //===========================
 // Construct session parameter string for session lookup
@@ -148,7 +149,7 @@ while($row = mysql_fetch_array($total_result_discount))
 $promotion_id = $row['id'];
 $promotion_name = $row['promotion_name'];
 $discount = $row['discount'];
-
+$discount_dsiplay = 1 - $discount;
 }
 
 //===========================
@@ -207,6 +208,10 @@ $total_price = $total_price + $row['price'];
 $pp["item_name_" . $index] = $row['session'];
 $pp["on0_" . $index] = $row['session_id'];
 $pp["on1_" . $index] = $level;
+if ($row['session_id'] == 8 && $promotion_id != "") 
+  {
+  $pp["os0_" . $index] = $promotion_name . " - " . $discount_dsiplay . "% Discount";
+  }
 $pp["amount_" . $index] = $row['price'];
 
 $index = $index + 1;
@@ -226,6 +231,7 @@ $pp["amount_" . $index] = 0;
 $pp["os0_" . $index] = $display_size;
 $pp["on0_" . $index] = $tshirt_size;
 $pp["on1_" . $index] = $tshirt_type;
+
 
 
 ?>
@@ -275,10 +281,10 @@ $pp["on1_" . $index] = $tshirt_type;
 <h1>Registration Cont.</h1>
 
 <!-- switch between sandbox and www and business name jim30@toliveistofly.com vs Accounting@enthought.com -->
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_cart">
 <input type="hidden" name="upload" value="1">
-<input type="hidden" name="business" value="jim30@toliveistofly.com">
+<input type="hidden" name="business" value="Accounting@enthought.com">
 
 <hr />
 

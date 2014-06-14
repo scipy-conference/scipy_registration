@@ -395,7 +395,7 @@ while ($row = mysql_fetch_array($total_presenters));
     }
   elseif ($promotion_name == "" && $promotion_id != "")
     {
-      echo "<p class=\"highlight\">The discount code `$promotion_id` has expired.</p>";
+      echo "<p class=\"highlight\">The discount code `$promotion_id` has expired or is invalid.</p>";
     }
 
 ?>
