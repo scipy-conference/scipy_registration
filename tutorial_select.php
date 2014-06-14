@@ -44,10 +44,11 @@ $sql_presenters .= "bio, ";
 $sql_presenters .= "title, ";
 $sql_presenters .= "track, ";
 $sql_presenters .= "authors, ";
-$sql_presenters .= "talks.description, ";
+$sql_presenters .= "locations.description, ";
 $sql_presenters .= "location_id, ";
 $sql_presenters .= "start_time, ";
 $sql_presenters .= "name, ";
+$sql_presenters .= "COUNT(registered_tutorials.talk_id) AS `qty`, ";
 $sql_presenters .= "DATE_FORMAT(start_time, '%h:%i %p') AS start_time_f, ";
 $sql_presenters .= "DATE_FORMAT(end_time, '%h:%i %p') AS end_time_f, ";
 $sql_presenters .= "DATE_FORMAT(start_time, '%W - %b %D') AS schedule_day, ";
@@ -57,6 +58,9 @@ $sql_presenters .= "FROM schedules ";
 
 $sql_presenters .= "LEFT JOIN talks ";
 $sql_presenters .= "ON schedules.talk_id = talks.id ";
+
+$sql_presenters .= "LEFT JOIN registered_tutorials  ";
+$sql_presenters .= "ON registered_tutorials.talk_id = talks.id  ";
 
 $sql_presenters .= "LEFT JOIN locations ";
 $sql_presenters .= "ON schedules.location_id = locations.id ";
@@ -69,6 +73,7 @@ $sql_presenters .= "ON license_type_id = license_types.id ";
 
 $sql_presenters .= "WHERE talks.conference_id = 3 ";
 $sql_presenters .= "AND track IN ('Introductory','Intermediate','Advanced','Topics') ";
+$sql_presenters .= "GROUP BY talks.id ";
 $sql_presenters .= "ORDER BY start_time, FIELD(track,'Introductory','Intermediate','Advanced','Topics')";
 
 
@@ -107,37 +112,37 @@ $last_schedule_day = $row['schedule_day'];
 
     if ($row['track'] == 'Introductory')
       { 
-//      if($row['talk_id'] == '109')
-//        {
-//        $display_block .="
-//        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
-//        $last_start_time = $row['start_time'];
-//        }
-//        else
-//        {
+      if($row['qty'] > 59)
+        {
+        $display_block .="
+        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+        $last_start_time = $row['start_time'];
+        }
+        else
+        {
         $display_block .="
         <td class=\"tutorial_selection\"><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" />" . $row['title'] . "</td>";
         $last_start_time = $row['start_time'];
-//        }
+        }
       }
    elseif ($row['track'] == 'Intermediate')
      { 
-//      if($row['talk_id'] == '107')
-//        {
-//        $display_block .="
-//        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
-//        $last_start_time = $row['start_time'];
-//        }
-//        else
-//        {
+      if($row['qty'] > 59)
+        {
+        $display_block .="
+        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+        $last_start_time = $row['start_time'];
+        }
+        else
+        {
         $display_block .="
         <td class=\"tutorial_selection\"><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" />" . $row['title'] . "</td>";
         $last_start_time = $row['start_time'];
-//        }
+        }
    }
  elseif ($row['track'] == 'Advanced')
    { 
-      if($row['talk_id'] == '102')
+      if($row['qty'] > 62)
         {
         $display_block .="
         <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
@@ -152,10 +157,19 @@ $last_schedule_day = $row['schedule_day'];
    }
  elseif ($row['track'] == 'Topics')
    { 
+      if($row['qty'] > 61)
+        {
+        $display_block .="
+        <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
+        $last_start_time = $row['start_time'];
+        }
+        else
+        {
         $display_block .="
         <td class=\"tutorial_selection\"><input class=\"validate[required] radio\" name=\"tutorial_" . $row['radio_attribute'] . "\" id=\"tutorial_" . $row['radio_attribute'] . "\" type=\"radio\" value=\"" . $row['talk_id'] . "\" />" . $row['title'] . "</td>";
         $last_start_time = $row['start_time'];
-   }
+        }
+	}
   else 
    {
 $display_block .="
