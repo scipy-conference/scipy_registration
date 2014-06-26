@@ -383,16 +383,6 @@ while ($row = mysql_fetch_array($total_presenters));
 
 <p class="left">Register online using the form below. You may also register via phone at (512)536-1057. </p>
 
-<div  class="highlight" style="margin-bottom: 1em;">
-<p>Note the following tutorials are full:</p>
-<ul>
-  <li>Fundamentals of the IPython Display Architecture and Interactive Widgets</li>
-  <li>Bayesian Statistical Analysis using Python</li>
-  <li>Image analysis in Python with scipy and scikit-image</li>
-  <li>Interactive Parallel Computing with IPython</li>
-  <li>Anatomy of Matplotlib</li>
-</ul>
-</div>
 <form id="formID" class="formular" method="post" action="reg_p2.php">
 
 <div class="form_row">

@@ -112,7 +112,7 @@ $last_schedule_day = $row['schedule_day'];
 
     if ($row['track'] == 'Introductory')
       { 
-      if($row['qty'] > 59)
+      if($row['qty'] > 69)
         {
         $display_block .="
         <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
@@ -127,7 +127,7 @@ $last_schedule_day = $row['schedule_day'];
       }
    elseif ($row['track'] == 'Intermediate')
      { 
-      if($row['qty'] > 62)
+      if($row['qty'] > 89)
         {
         $display_block .="
         <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
@@ -142,7 +142,7 @@ $last_schedule_day = $row['schedule_day'];
    }
  elseif ($row['track'] == 'Advanced')
    { 
-      if($row['qty'] > 61)
+      if($row['qty'] > 89)
         {
         $display_block .="
         <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
@@ -157,7 +157,7 @@ $last_schedule_day = $row['schedule_day'];
    }
  elseif ($row['track'] == 'Topics')
    { 
-      if($row['qty'] > 59)
+      if($row['qty'] > 62)
         {
         $display_block .="
         <td>" . $row['title'] . " <span class=\"highlight\"><strong><em>- FULL&nbsp;</em></strong></span></td>";
