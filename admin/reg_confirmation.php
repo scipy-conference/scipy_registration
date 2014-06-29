@@ -55,7 +55,7 @@ $index = $index + 1;
 $display_block .="<tr>
 <td align=right>$index</td>
 <td><a href=\"https://conference.scipy.org/scipy_registration/admin/registrant_info.php?id=$participant_id\">$first_name&nbsp;$last_name</a></td>
-<td><a href=\"mailto:$email?subject=SciPy2014 Registration Confirmation&body=Dear $first_name:%0A%0A
+<td><a href=\"mailto:$email?bcc=jivanoff@enthought.com&subject=SciPy2014 Registration Confirmation&body=Dear $first_name:%0A%0A
 
 SciPy is quickly approaching and we would like to take a minute of your time to confirm your registration information and also highlight a few notable events.%0A%0A
 
