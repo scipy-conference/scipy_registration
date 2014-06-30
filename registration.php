@@ -383,6 +383,13 @@ while ($row = mysql_fetch_array($total_presenters));
 
 <p class="left">Register online using the form below. You may also register via phone at (512)536-1057. </p>
 
+<div  class="highlight" style="margin-bottom: 1em;">
+<p>Note the following tutorial is full:</p>
+<ul>
+  <li>Anatomy of Matplotlib - Part 1</li>
+</ul>
+</div>
+
 <form id="formID" class="formular" method="post" action="reg_p2.php">
 
 <div class="form_row">
