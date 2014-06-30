@@ -387,6 +387,8 @@ while ($row = mysql_fetch_array($total_presenters));
 <p>Note the following tutorial is full:</p>
 <ul>
   <li>Anatomy of Matplotlib - Part 1</li>
+  <li>Image analysis in Python with scipy and scikit-image</li>
+  <li>Reproducible Science - Walking the Walk</li>
 </ul>
 </div>
 
