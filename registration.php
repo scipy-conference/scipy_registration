@@ -384,7 +384,7 @@ while ($row = mysql_fetch_array($total_presenters));
 <p class="left">Register online using the form below. You may also register via phone at (512)536-1057. </p>
 
 <div  class="highlight" style="margin-bottom: 1em;">
-<p>Note the following tutorial is full:</p>
+<p>Note the following tutorials are full:</p>
 <ul>
   <li>Anatomy of Matplotlib - Part 1</li>
   <li>Image analysis in Python with scipy and scikit-image</li>
