@@ -9,7 +9,7 @@
   </div>
 
   <div class="header_tagline">
-    Scientific Computing with Python <br /> Austin, Texas &#8226; July 6-12<br /><span class="highlight" style="font-family: Arial, non-serif; padding: 0 4em 0 4em;">Registration - 98% Full</span><br />
+    Scientific Computing with Python <br /> Austin, Texas &#8226; July 6-12<br /><span class="highlight" style="font-family: Arial, non-serif; padding: 0 4em 0 4em;">Registration - 99% Full</span><br />
   </div>
 </header>
 
