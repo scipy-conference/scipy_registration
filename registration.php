@@ -51,7 +51,7 @@ session_start();
 
 <p class="left">Registration for SciPy2013 is now closed. Registration was well above plan this year, and we've reached the limit we can handle at this year's venue.</p>
 
-<p>We're very sorry if you've missed out. We will expand our venue for 2014 and would love to see you there.</p>
+<p>We're very sorry if you've missed out. We will expand our venue for 2015 and would love to see you there.</p>
 
 <p class="asterisk_text">Refund Policy: 100% refund until Sunday, June 9th.  Effective Monday, June 10th we provide 50% and after Friday, June 21st there are no refunds.</p>
 
