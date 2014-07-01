@@ -49,7 +49,7 @@ session_start();
 
 <h1>2014 Conference Registration</h1>
 
-<p class="left">Registration for SciPy2013 is now closed. Registration was well above plan this year, and we've reached the limit we can handle at this year's venue.</p>
+<p class="left">Registration for SciPy2014 is now closed. Registration was well above plan this year, and we've reached the limit we can handle at this year's venue.</p>
 
 <p>We're very sorry if you've missed out. We will expand our venue for 2015 and would love to see you there.</p>
 
